@@ -24,19 +24,19 @@ train_loaders = {
         shuffle = False, 
     ), 
 }
-model = torchvision.models.alexnet(pretrained = False)
+model = torchvision.models.vgg16(pretrained = True)
 model.classifier[6] = nn.Linear(
     model.classifier[6].in_features, 5, 
 )
 optimizer = torch.optim.Adam(
-    model.parameters(), lr = 3e-4, 
+    model.parameters(), lr = 1e-5, 
 )
 
 wandb.init(
     entity = "khiemlhfx", project = "RLDI", 
-    name = "alexnet-scratch", 
+    name = "vgg16-imagenet", 
 )
-save_ckp_dir = "../../ckps/RLDI/alexnet-scratch"
+save_ckp_dir = "../../ckps/RLDI/vgg16-imagenet"
 if not os.path.exists(save_ckp_dir):
     os.makedirs(save_ckp_dir)
 train_fn(
