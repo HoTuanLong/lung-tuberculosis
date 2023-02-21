@@ -24,12 +24,12 @@ train_loaders = {
         shuffle = False, 
     ), 
 }
-model = torchvision.models.alexnet()
+model = torchvision.models.alexnet(pretrained = False)
 model.classifier[6] = nn.Linear(
     model.classifier[6].in_features, 5, 
 )
 optimizer = torch.optim.Adam(
-    model.parameters(), lr = 1e-3, 
+    model.parameters(), lr = 3e-4, 
 )
 
 wandb.init(
@@ -40,7 +40,7 @@ save_ckp_dir = "../../ckps/RLDI/alexnet-scratch"
 if not os.path.exists(save_ckp_dir):
     os.makedirs(save_ckp_dir)
 train_fn(
-    train_loaders, num_epochs = 30, 
+    train_loaders, num_epochs = 50, 
     model = model, 
     optimizer = optimizer, 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu"), 
