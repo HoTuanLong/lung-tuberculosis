@@ -12,7 +12,10 @@ class ImageDataset(torch.utils.data.Dataset):
             self.transform = A.Compose(
                 [
                     A.Resize(height = image_size, width = image_size, ), 
-                    A.HorizontalFlip(p = 0.5), 
+                    A.HorizontalFlip(), 
+                    A.Affine(
+                        scale = 0.4, translate_percent = 0.4, 
+                    ), 
                     A.Normalize(), AT.ToTensorV2(), 
                 ]
             )
