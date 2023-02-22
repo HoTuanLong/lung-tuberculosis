@@ -24,9 +24,9 @@ train_loaders = {
         shuffle = False, 
     ), 
 }
-model = torchvision.models.vgg16(pretrained = True)
-model.classifier[6] = nn.Linear(
-    model.classifier[6].in_features, 5, 
+model = torchvision.models.convnext_tiny(pretrained = True)
+model.classifier[2] = nn.Linear(
+    model.classifier[2].in_features, 5, 
 )
 optimizer = torch.optim.Adam(
     model.parameters(), lr = 1e-5, 
@@ -34,9 +34,9 @@ optimizer = torch.optim.Adam(
 
 wandb.init(
     entity = "khiemlhfx", project = "RLDI", 
-    name = "vgg16-imagenet", 
+    name = "convnext_tiny", 
 )
-save_ckp_dir = "../../ckps/RLDI/vgg16-imagenet"
+save_ckp_dir = "../../ckps/RLDI/convnext_tiny"
 if not os.path.exists(save_ckp_dir):
     os.makedirs(save_ckp_dir)
 train_fn(
