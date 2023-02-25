@@ -89,10 +89,6 @@ def test_fn(
         running_labels, running_predictions, 
         digits = 4, 
     ))
-    print(metrics.confusion_matrix(
-        running_labels, running_predictions, 
-        normalize = None, 
-    ))
 
     print("\nFinish Testing ...\n" + " = "*16)
     return {
