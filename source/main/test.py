@@ -13,7 +13,7 @@ test_loader = torch.utils.data.DataLoader(
     batch_size = 32, 
 )
 model = torch.load(
-    "../../ckps/RLDI/convnext_tiny/best.ptl", 
+    "../../ckps/RLDI/convnext_small/best.ptl", 
     map_location = "cpu", 
 )
 test_fn(

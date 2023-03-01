@@ -9,21 +9,20 @@ class ImageDataset(torch.utils.data.Dataset):
     ):
         self.image_files = glob.glob(data_dir + "*/*")
         if augment:
-            self.transform = A.Compose(
+            self.transform = torchvision.transforms.Compose(
                 [
-                    A.Resize(height = image_size, width = image_size, ), 
-                    A.HorizontalFlip(), 
-                    A.Affine(
-                        scale = 0.4, translate_percent = 0.4, 
+                    torchvision.transforms.RandAugment(
+                        num_ops = 3, 
                     ), 
-                    A.Normalize(), AT.ToTensorV2(), 
+                    torchvision.transforms.Resize((image_size, image_size, )), 
+                    torchvision.transforms.ToTensor(), torchvision.transforms.Normalize(mean = [0.485, 0.456, 0.406], std = [0.229, 0.224, 0.225], ), 
                 ]
             )
         else:
-            self.transform = A.Compose(
+            self.transform = torchvision.transforms.Compose(
                 [
-                    A.Resize(height = image_size, width = image_size, ), 
-                    A.Normalize(), AT.ToTensorV2(), 
+                    torchvision.transforms.Resize((image_size, image_size, )), 
+                    torchvision.transforms.ToTensor(), torchvision.transforms.Normalize(mean = [0.485, 0.456, 0.406], std = [0.229, 0.224, 0.225], ), 
                 ]
             )
 
@@ -35,11 +34,8 @@ class ImageDataset(torch.utils.data.Dataset):
         index, 
     ):
         image_file = self.image_files[index]
-        image = cv2.imread(image_file)
-        image = cv2.cvtColor(
-            image, 
-            code = cv2.COLOR_BGR2RGB, 
-        )
-        image, label = self.transform(image = image)["image"], int(image_file.split("/")[-2])
+        image = Image.open(image_file)
+
+        image, label = self.transform(image), int(image_file.split("/")[-2])
 
         return image, label

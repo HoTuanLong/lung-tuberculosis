@@ -24,7 +24,7 @@ train_loaders = {
         shuffle = False, 
     ), 
 }
-model = torchvision.models.convnext_tiny(pretrained = True)
+model = torchvision.models.convnext_small(pretrained = True)
 model.classifier[2] = nn.Linear(
     model.classifier[2].in_features, 5, 
 )
@@ -34,13 +34,13 @@ optimizer = torch.optim.Adam(
 
 wandb.init(
     entity = "khiemlhfx", project = "RLDI", 
-    name = "convnext_tiny", 
+    name = "convnext_small", 
 )
-save_ckp_dir = "../../ckps/RLDI/convnext_tiny"
+save_ckp_dir = "../../ckps/RLDI/convnext_small"
 if not os.path.exists(save_ckp_dir):
     os.makedirs(save_ckp_dir)
 train_fn(
-    train_loaders, num_epochs = 50, 
+    train_loaders, num_epochs = 60, 
     model = model, 
     optimizer = optimizer, 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu"), 
