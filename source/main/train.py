@@ -40,7 +40,7 @@ save_ckp_dir = "../../ckps/RLDI/convnext_small"
 if not os.path.exists(save_ckp_dir):
     os.makedirs(save_ckp_dir)
 train_fn(
-    train_loaders, num_epochs = 60, 
+    train_loaders, num_epochs = 80, 
     model = model, 
     optimizer = optimizer, 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu"), 
