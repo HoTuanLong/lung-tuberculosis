@@ -24,7 +24,9 @@ train_loaders = {
         shuffle = False, 
     ), 
 }
-model = torchvision.models.convnext_small(pretrained = True)
+model = torchvision.models.convnext_small(
+    pretrained = True, 
+)
 model.classifier[2] = nn.Linear(
     model.classifier[2].in_features, 5, 
 )
