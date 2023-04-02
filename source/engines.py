@@ -10,6 +10,7 @@ def train_fn(
 ):
     print("\nStart Training ...\n" + " = "*16)
     model = model.to(device)
+    model = torch.nn.DataParallel(model, device_ids=[0, 1])
 
     best_accuracy = 0.0
     for epoch in range(1, num_epochs + 1):

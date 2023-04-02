@@ -9,40 +9,40 @@ from engines import *
 train_loaders = {
     "train":torch.utils.data.DataLoader(
         ImageDataset(
-            data_dir = "../../datasets/RLDI/train/", 
+            data_dir = "../../../dataset/CXR-TB/train/", 
             augment = True, 
         ), 
-        batch_size = 32, 
+        batch_size = 56, 
         shuffle = True, 
     ), 
     "val":torch.utils.data.DataLoader(
         ImageDataset(
-            data_dir = "../../datasets/RLDI/val/", 
+            data_dir = "../../../dataset/CXR-TB/val/", 
             augment = False, 
         ), 
-        batch_size = 32, 
+        batch_size = 56, 
         shuffle = False, 
     ), 
 }
-model = torchvision.models.convnext_small(
+model = torchvision.models.swin_t(
     pretrained = True, 
 )
-model.classifier[2] = nn.Linear(
-    model.classifier[2].in_features, 5, 
+model.head = nn.Linear(
+    model.head.in_features, 2, 
 )
 optimizer = torch.optim.Adam(
     model.parameters(), lr = 1e-5, 
 )
 
 wandb.init(
-    entity = "khiemlhfx", project = "RLDI", 
-    name = "convnext_small", 
+    entity = "longht", project = "CXR-TB", 
+    name = "swin_t", 
 )
-save_ckp_dir = "../../ckps/RLDI/convnext_small"
+save_ckp_dir = "../../ckps/CXR-TB/swin_t"
 if not os.path.exists(save_ckp_dir):
     os.makedirs(save_ckp_dir)
 train_fn(
-    train_loaders, num_epochs = 80, 
+    train_loaders, num_epochs = 50, 
     model = model, 
     optimizer = optimizer, 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu"), 

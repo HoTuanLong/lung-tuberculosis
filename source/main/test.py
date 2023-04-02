@@ -8,12 +8,12 @@ from engines import *
 
 test_loader = torch.utils.data.DataLoader(
     ImageDataset(
-        data_dir = "../../datasets/RLDI/test/", 
+        data_dir = "../../dataset/CXR-TB/val/", 
     ), 
-    batch_size = 32, 
+    batch_size = 56, 
 )
 model = torch.load(
-    "../../ckps/RLDI/convnext_small/best.ptl", 
+    "../../ckps/CXR-TB/swin_t/best.ptl", 
     map_location = "cpu", 
 )
 test_fn(
